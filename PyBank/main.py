@@ -5,8 +5,25 @@ import csv
 # Path the CSV file
 budget_csv = os.path.join("budget_data.csv")
 
-# Create Titles for Rows
-date = str(budget_csv[0])
-profit_loss = int(budget_csv[1])
+# Read in the CSV file
+with open(budget_csv, 'r') as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
+    
+    # Skip Header
+    next(csvreader)
+    
+    #Count the number of rows for total month count
+    total_months = list(csvreader)
 
-print(test)
+    
+    
+    #for row in csvreader:
+        #total_months[row[0]].append(row)
+        #print(total_months)
+
+
+    # Final print of financial analysis
+    print("Financial Analysis")
+    print("----------------------------")
+    print(f'Total Months: {len(total_months)}')
+    
