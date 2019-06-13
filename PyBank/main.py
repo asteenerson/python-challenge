@@ -9,3 +9,4 @@ budget_csv = os.path.join("budget_data.csv")
 date = str(budget_csv[0])
 profit_loss = int(budget_csv[1])
 
+print(test)
