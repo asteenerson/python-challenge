@@ -2,7 +2,7 @@
 import os
 import csv
 
-# Path the CSV file
+# Path to the CSV file
 budget_csv = os.path.join("budget_data.csv")
 
 # Create lists for data and assign values
@@ -10,7 +10,7 @@ dates = []
 pl = []
 net_total = 0
 
-# funciton to return month and amount for greatest increase and greatest decrease
+# Funciton to return month and amount for greatest increase and greatest decrease
 def print_maxmin(budget):
     month = str(budget[0])
     amount = int(budget[1])
@@ -28,15 +28,15 @@ data = open(budget_csv, 'r')
 with data as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     
-    # Skip Header
+    # Skip header
     next(csvreader)    
 
-    # Loop through the CSV file to add to arrays
+    # Loop through the CSV file to add to lists
     for row in csvreader:
         dates.append(row[0])
         pl.append(row[1])  
         
-    # Loop through pl to sum net total
+    # Loop through pl(profit/losses) to sum net total
     for i in pl:
         net_total = sum(int(i) for i in pl)
      
@@ -47,16 +47,14 @@ with data as csvfile:
     average_change= (sum(diff)/len(diff))     
    
     #--------------------
-    #Print Analysis
+    # Print Analysis
     #--------------------
     print("Financial Analysis")
     print("----------------------------")
 
-    # dates is the count of row[0]
+    # Dates is the count of row[0]
     print(f'Total Months: {len(dates)}')
-
     print(f'Total: ${net_total}')
-
     print(f'Average Change: ${round(average_change,2)}')
 
     # Create and write results to text file
@@ -68,7 +66,7 @@ with data as csvfile:
     textfile.write(f'Total: ${net_total}\n')
     textfile.write(f'Average Change: ${round(average_change,2)}\n')
 
-    # Change pl(profit/losses) array to integers in order to find the true max and min increases
+    # Change pl(profit/losses) list to integers in order to find the true max and min increases
     pl_int = [int(j) for j in pl]
     max_value = max(pl_int)
     min_value = min(pl_int)
