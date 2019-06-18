@@ -10,9 +10,9 @@ dates = []
 pl = []
 net_total = 0
 
-# Funciton to return month and amount for greatest increase and greatest decrease
+# Funciton to return month and amount for greatest monthly increase and decrease
 def print_maxmin(budget):
-    month = str(budget[0])
+    month = budget[0]
     amount = int(budget[1])
 
     if amount > 0:
@@ -34,18 +34,26 @@ with data as csvfile:
     # Loop through the CSV file to add to lists
     for row in csvreader:
         dates.append(row[0])
-        pl.append(row[1])  
-        
+        pl.append(row[1]) 
+
+
     # Loop through pl(profit/losses) to sum net total
     for i in pl:
         net_total = sum(int(i) for i in pl)
      
-    # Subtract monthly values in pl(profit/losses) array for difference. Then average the difference for the average change
+    # Subtract monthly values in pl(profit/losses) list of monthly differences
     value1 = (pl[1:])
     value2 = (pl)
+
     diff = [int(value1) - int(value2) for value1, value2 in zip(value1, value2)]
-    average_change= (sum(diff)/len(diff))     
-   
+
+    # Average the difference for the average change
+    average_change= (sum(diff)/len(diff))
+    
+    # Return the max and min differences between 2 months for greatest increase and decrease
+    max_diff = max(diff)
+    min_diff = min(diff)   
+    
     #--------------------
     # Print Analysis
     #--------------------
@@ -66,18 +74,14 @@ with data as csvfile:
     textfile.write(f'Total: ${net_total}\n')
     textfile.write(f'Average Change: ${round(average_change,2)}\n')
 
-    # Change pl(profit/losses) list to integers in order to find the true max and min increases
-    pl_int = [int(j) for j in pl]
-    max_value = max(pl_int)
-    min_value = min(pl_int)
-    
-    #Reset CSV Loop
-    data.seek(0)
-    
-    # Print from the print_minmax function for greatest increase and decrease
-    for row in csvreader:
-        if str(max_value) == row[1]:
-            print_maxmin(row)
+     
+    # Create new table with zip to compare dates and monthly differences
+    new_table = zip(dates[1:], diff)
 
-        if str(min_value) == row[1]:
-            print_maxmin(row)
+    # Print from the print_minmax function for greatest monthly increase and decrease
+    for j in new_table:
+        if max_diff == j[1]:
+            print_maxmin(j)
+        
+        if min_diff == j[1]:
+            print_maxmin(j)  
